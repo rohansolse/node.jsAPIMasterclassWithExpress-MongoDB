@@ -1,26 +1,9 @@
-const http = require('http');
-const port = 8081
+const express = require('express')
+const app = express()
 
-let todos = [
-    { id: 1, value: true },
-    { id: 2, value: false },
-    { id: 3, value: true }
-]
-const server = http.createServer((request, response) => {
-    let { url, method } = request
-    console.log(url, method);
-    response.writeHead(404, {
-        'Content-Type': 'application/json',
-        'X-powered-by': 'Node.js'
-    })
-    response.end(JSON.stringify({
-        status: "success",
-        data: null,
-        error: "Not found"
-    }));
-})
+const dotenv = require('dotenv')
+dotenv.config({ path: './config/config.env' })
+const port = process.env.PORT || 5000
 
-
-server.listen(port, () => {
-    console.log(`Server running at http://127.0.0.1:${port}/`);
-});
+app.get('/', (req, res) => res.send('Hello World!'))
+app.listen(port, () => console.log(`App is Running in ${process.env.NODE_ENV} mode & listening on ${port}!`))
