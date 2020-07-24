@@ -1,0 +1,1 @@
+gnome-terminal --tab --active -- bash -c "mongod --dbpath /var/lib/mongo --logpath /var/log/mongodb/mongod.log --fork; code .; npm run dev; exec bash"

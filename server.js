@@ -14,6 +14,7 @@ dotenv.config({ path: './config/config.env' })
 // connect to db
 connectDb();
 
+app.use(express.json())
 // Test server
 app.get('/', (req, res) => { res.status(200).send({ name: "Rohan" }) })
 

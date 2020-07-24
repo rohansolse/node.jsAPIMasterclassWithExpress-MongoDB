@@ -16,7 +16,8 @@ const BootcampSchema = new mongoose.Schema({
     },
     website: {
         type: String,
-        match: ["https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)",
+        match: [
+            /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
             "please add valid URL with HTTP or HTTPS"
         ]
     },
@@ -28,11 +29,11 @@ const BootcampSchema = new mongoose.Schema({
         type: {
             type: String, // Don't do `{ location: { type: String } }`
             enum: ['Point'], // 'location.type' must be 'Point'
-            required: true
+            required: false
         },
         coordinates: {
             type: [Number],
-            required: true,
+            required: false,
             index: '2dsphere'
         }
     },
@@ -42,7 +43,7 @@ const BootcampSchema = new mongoose.Schema({
     state: String,
     zipCode: String,
     country: String,
-    carrier: {
+    careers: {
         type: [String],
         required: true,
         enum: [
