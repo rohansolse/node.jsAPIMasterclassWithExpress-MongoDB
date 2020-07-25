@@ -1,4 +1,5 @@
 const Bootcamp = require('../model/bootcamp')
+const ErrorHandler = require('../utils/errorResponse')
 
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps
@@ -12,10 +13,7 @@ exports.getAllBootcamp = async (req, res, next) => {
             data: bootcamp
         })
     } catch (error) {
-        console.log("error : ", error)
-        res.status(400).json({
-            status: false
-        })
+        next(error)
     }
 }
 
@@ -26,19 +24,14 @@ exports.getSingleBootcamp = async (req, res, next) => {
     try {
         let bootcamp = await Bootcamp.findById(req.params.id)
         if (!bootcamp) {
-            res.status(400).json({
-                status: false
-            })
+            return next(new ErrorHandler(`Bootcamp not found with ID : ${req.params.id}`, 404))
         }
         res.status(200).json({
             status: 'success',
             data: bootcamp
         })
     } catch (error) {
-        console.log("error : ", error)
-        res.status(400).json({
-            status: false
-        })
+        next(error)
     }
 }
 
@@ -53,10 +46,7 @@ exports.createBootcamp = async (req, res, next) => {
             data: bootcamp
         })
     } catch (error) {
-        console.log("error : ", error)
-        res.status(400).json({
-            status: false
-        })
+        next(error)
     }
 }
 
@@ -70,19 +60,14 @@ exports.updateBootcamp = async (req, res, next) => {
             runValidators: true
         })
         if (!bootcamp) {
-            res.status(400).json({
-                status: false
-            })
+            return next(new ErrorHandler(`Bootcamp not found with ID : ${req.params.id}`, 404))
         }
         res.status(200).json({
             status: 'success',
             data: bootcamp
         })
     } catch (error) {
-        console.log("error : ", error)
-        res.status(400).json({
-            status: false
-        })
+        next(error)
     }
 }
 
@@ -93,18 +78,13 @@ exports.deleteBootcamp = async (req, res, next) => {
     try {
         let bootcamp = await Bootcamp.findByIdAndDelete(req.params.id)
         if (!bootcamp) {
-            res.status(400).json({
-                status: false
-            })
+            return next(new ErrorHandler(`Bootcamp not found with ID : ${req.params.id}`, 404))
         }
         res.status(200).json({
             status: 'success',
             data: {}
         })
     } catch (error) {
-        console.log("error : ", error)
-        res.status(400).json({
-            status: false
-        })
+        next(error)
     }
 }
